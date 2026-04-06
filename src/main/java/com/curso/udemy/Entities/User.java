@@ -1,5 +1,6 @@
 package com.curso.udemy.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -31,7 +32,8 @@ public class User implements Serializable {
 
     List<Order> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client")
+    @JsonIgnore
     public List<Order> getOrders() {
         return this.orders;
     }
