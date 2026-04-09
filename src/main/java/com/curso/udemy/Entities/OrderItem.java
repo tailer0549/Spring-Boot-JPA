@@ -1,6 +1,7 @@
 package com.curso.udemy.Entities;
 
 import com.curso.udemy.Entities.PK.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -10,8 +11,10 @@ import java.util.Objects;
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
 
+
+    @JsonIgnore
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
@@ -30,6 +33,8 @@ public class OrderItem implements Serializable {
         return id;
     }
 
+
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }

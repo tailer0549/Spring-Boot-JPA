@@ -1,5 +1,6 @@
 package com.curso.udemy.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -26,12 +27,20 @@ public class Product implements Serializable {
     private Set<Category> categories = new HashSet<>();
 
 
+
+
     @OneToMany(mappedBy = "id.product")
-    private Set<OrderItem> orderItems = new HashSet<>();
+    private Set<OrderItem> items = new HashSet<>();
 
 
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
+    @JsonIgnore
+    public Set<Order> getOrder() {
+        Set<Order> set = new HashSet<>();
+
+        for (OrderItem x : items) {
+            set.add(x.getOrder());
+        }
+        return set;
     }
 
 

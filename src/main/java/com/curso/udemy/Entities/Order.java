@@ -2,6 +2,7 @@ package com.curso.udemy.Entities;
 
 import com.curso.udemy.Entities.Enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -27,8 +28,15 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
-    @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL)
-    private Set<OrderItem> ordemItems = new HashSet<>();
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Order() {
     }
@@ -72,6 +80,16 @@ public class Order implements Serializable {
     public void setClient(User client) {
         this.client = client;
     }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
